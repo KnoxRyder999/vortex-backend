@@ -6,7 +6,7 @@ const config = require('../config/config')['development'];
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 const db = {};
-const modelsPath = path.join(__dirname, 'models');
+const modelsPath = path.join(__dirname, 'models'); // ✅ This now correctly points to db/models
 
 fs.readdirSync(modelsPath)
   .filter(file => file.endsWith('.model.js'))
