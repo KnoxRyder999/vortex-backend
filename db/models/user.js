@@ -1,71 +1,62 @@
-'use strict';
-const { Model } = require('sequelize');
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-      // define associations here
-    }
+  const User = sequelize.define('User', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
-    // Optional: add method to compare password
-    validPassword(password) {
-      return bcrypt.compare(password, this.password);
-    }
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    salt: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+  }, {
+    tableName: 'users',
+    hooks: {
+      beforeCreate: (user) => {
+        const salt = crypto.randomBytes(16).toString('hex');
+        user.salt = salt;
+        user.password = hashPassword(user.password, salt);
+      },
+      beforeUpdate: (user) => {
+        if (user.changed('password')) {
+          const salt = crypto.randomBytes(16).toString('hex');
+          user.salt = salt;
+          user.password = hashPassword(user.password, salt);
+        }
+      }
+    },
+  });
+
+  // Utility function to hash password with salt
+  function hashPassword(password, salt) {
+    return crypto
+      .pbkdf2Sync(password, salt, 10000, 64, 'sha512')
+      .toString('hex');
   }
 
-  User.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: true,
-        },
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      avatar: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-    },
-    {
-      sequelize,
-      modelName: 'User',
-      tableName: 'users',
-      timestamps: true,
-
-      hooks: {
-        // Hash before creating
-        beforeCreate: async (user) => {
-          if (user.password) {
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(user.password, salt);
-          }
-        },
-        // Hash before updating if password has changed
-        beforeUpdate: async (user) => {
-          if (user.changed('password')) {
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(user.password, salt);
-          }
-        },
-      },
-    }
-  );
+  // Instance method for verifying password
+  User.prototype.validatePassword = function (inputPassword) {
+    const hashed = hashPassword(inputPassword, this.salt);
+    return this.password === hashed;
+  };
 
   return User;
 };

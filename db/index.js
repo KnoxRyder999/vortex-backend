@@ -9,7 +9,7 @@ const db = {};
 const modelsPath = path.join(__dirname, 'models'); // ✅ This now correctly points to db/models
 
 fs.readdirSync(modelsPath)
-  .filter(file => file.endsWith('.model.js'))
+  .filter(file => file.endsWith('.js'))
   .forEach(file => {
     const model = require(path.join(modelsPath, file))(sequelize, DataTypes);
     db[model.name] = model;
