@@ -43,6 +43,21 @@ module.exports = (sequelize, DataTypes) => {
         user.salt = salt;
         user.password = hashPassword(user.password, salt);
       },
+      afterFind: (result, options) => {
+        if (!result) return;
+        if (result.dataValues) {
+          delete result.dataValues.password;
+          delete result.dataValues.salt;
+        }
+        if (Array.isArray(result)) {
+          result.forEach(user => {
+            if (user.dataValues) {
+              delete user.dataValues.password;
+              delete user.dataValues.salt;
+            }
+          });
+        }
+      },
       beforeUpdate: user => {
         if (user.changed('password')) {
           const salt = crypto.randomBytes(16).toString('hex');

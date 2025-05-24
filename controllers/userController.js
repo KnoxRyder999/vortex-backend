@@ -11,13 +11,13 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-exports.signin = (req, res) => {
+exports.login = (req, res) => {
     try {
         const { email, password } = req.body
         User.findOne({ where: { email } })
         .then(user => {
             if (!user) return res.status(401).json({ message: 'Invalid email or password.' });
-            if (!user.validatePassword) return res.status(401).json({ message: 'Invalid email or password.' });
+            if (!user.validatePassword(password)) return res.status(401).json({ message: 'Invalid email or password.' });
             res.send(user)
         })
         .catch(err => {
@@ -30,7 +30,7 @@ exports.signin = (req, res) => {
     }
 }
 
-exports.createUser = (req, res) => {
+exports.register = (req, res) => {
     try {
         const form = new Formidable.IncomingForm({ uploadDir: __dirname + "/../../frontend/public/uploads", keepExtensions: true, multiples: false })
         form.parse(req, (err, fields, files) => {
