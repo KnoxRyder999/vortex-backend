@@ -34,6 +34,11 @@ module.exports = {
       video: {
         type: Sequelize.STRING,
       },
+      category: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'General',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

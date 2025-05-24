@@ -12,19 +12,17 @@ module.exports = (sequelize, DataTypes) => {
 
   Project.init(
     {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      description: {
-        type: DataTypes.TEXT
-      },
-      client: {
-        type: DataTypes.STRING
-      },
+      name: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      client: DataTypes.STRING,
       clientPublic: {
         type: DataTypes.INTEGER,
         defaultValue: 0
+      },
+      category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'General'
       },
       skills: {
         type: DataTypes.JSON,
@@ -34,9 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSON,
         defaultValue: []
       },
-      video: {
-        type: DataTypes.STRING
-      }
+      video: DataTypes.STRING
     },
     {
       sequelize,
@@ -45,6 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true
     }
   );
-
+  
   return Project;
 };
