@@ -15,17 +15,18 @@ exports.signin = (req, res) => {
     try {
         const { email, password } = req.body
         User.findOne({ where: { email } })
-        if (!user) {
-            return res.status(401).json({ message: 'Invalid email or password.' });
-        }
-
-        const hashedInput = hashPassword(password, user.salt);
-
-        if (hashedInput !== user.password) {
-            return res.status(401).json({ message: 'Invalid email or password.' });
-        }
+        .then(user => {
+            if (!user) return res.status(401).json({ message: 'Invalid email or password.' });
+            if (!user.validatePassword) return res.status(401).json({ message: 'Invalid email or password.' });
+            res.send(user)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send(err.message)
+        })
     } catch (e) {
-
+        console.log(e);
+        res.status(500).send(e.message)
     }
 }
 
