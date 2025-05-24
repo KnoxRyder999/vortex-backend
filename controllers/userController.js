@@ -1,5 +1,6 @@
 const Formidable = require("formidable");
 const db = require('../db');
+const jwt = require('jsonwebtoken');
 const User = db.User;
 
 exports.getAllUsers = async (req, res) => {
@@ -15,15 +16,20 @@ exports.login = (req, res) => {
     try {
         const { email, password } = req.body
         User.findOne({ where: { email } })
-        .then(user => {
-            if (!user) return res.status(401).json({ message: 'Invalid email or password.' });
-            if (!user.validatePassword(password)) return res.status(401).json({ message: 'Invalid email or password.' });
-            res.send(user)
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).send(err.message)
-        })
+            .then(user => {
+                if (!user) return res.status(500).json({ message: 'Invalid email or password.' });
+                if (!user.validatePassword(password)) return res.status(500).json({ message: 'Invalid email or password.' });
+                const token = jwt.sign(
+                    { ...user }, // payload
+                    JWT_SECRET,
+                    { expiresIn: '2h' } // expires in 2 hours
+                );
+                res.send({ token, user })
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).send(err.message)
+            })
     } catch (e) {
         console.log(e);
         res.status(500).send(e.message)

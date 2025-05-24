@@ -75,8 +75,8 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   User.prototype.validatePassword = function (inputPassword) {
-    const hashed = hashPassword(inputPassword, this.salt);
-    return this.password === hashed;
+    const hashed = hashPassword(inputPassword, this._previousDataValues['salt']);
+    return this._previousDataValues.password === hashed;
   };
 
   return User;
