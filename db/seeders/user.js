@@ -14,6 +14,7 @@ module.exports = {
       {
         name: 'Azlan Yusof',
         email: 'sanderberg786@gmail.com',
+        isAdmin: 10,
         password: 'aaa',
         avatar: 'alice.jpg',
       },
@@ -21,12 +22,14 @@ module.exports = {
         name: 'Fawaz Hassan',
         email: 'bob@example.com',
         password: 'aaa',
+        isAdmin: 1,
         avatar: 'bob.png',
       },
       {
         name: 'Adam dean',
         email: 'charlie@example.com',
         password: 'aaa',
+        isAdmin: 1,
         avatar: 'charlie.webp',
       },
     ];
@@ -38,6 +41,7 @@ module.exports = {
       return {
         name: user.name,
         email: user.email,
+        isAdmin: user.isAdmin,
         salt,
         role: '[]',
         password: hashPassword(user.password, salt),

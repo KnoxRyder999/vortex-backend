@@ -21,7 +21,7 @@ exports.login = (req, res) => {
                 if (!user.validatePassword(password)) return res.status(500).json({ message: 'Invalid email or password.' });
                 const token = jwt.sign(
                     { ...user }, // payload
-                    JWT_SECRET,
+                    process.env.JWT_SECRET,
                     { expiresIn: '2h' } // expires in 2 hours
                 );
                 res.send({ token, user })
@@ -50,10 +50,14 @@ exports.register = (req, res) => {
             const email = getVal(fields.email)
             const password = getVal(fields.password)
             User.create({ name, email, password, avatar })
-                .then(u => {
-                    console.log(u);
-                    res.send(u)
-                })
+                .then(user => {
+                    const token = jwt.sign(
+                        { ...user, password: "", salt: "" }, // payload
+                        process.env.JWT_SECRET,
+                        { expiresIn: '2h' } // expires in 2 hours
+                    );
+                    res.send({ token, user })
+                    })
                 .catch(err => {
                     console.log(err);
                     res.status(500).send(err.message)

@@ -48,10 +48,12 @@ module.exports = (sequelize, DataTypes) => {
         if (result.dataValues) {
           delete result.dataValues.password;
           delete result.dataValues.salt;
+          result.dataValues.role = JSON.parse(result.dataValues.role)
         }
         if (Array.isArray(result)) {
           result.forEach(user => {
             if (user.dataValues) {
+              user.dataValues.role = JSON.parse(user.dataValues.role)
               delete user.dataValues.password;
               delete user.dataValues.salt;
             }

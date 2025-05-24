@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('projects', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -13,39 +13,26 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isAdmin: {
+      description: {
+        type: Sequelize.TEXT,
+      },
+      client: {
+        type: Sequelize.STRING,
+      },
+      clientPublic: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         defaultValue: 0
       },
-      role: {
-        type: Sequelize.STRING,
-      },
-      skill: {
-        type: Sequelize.STRING,
-      },
-      contact: {
+      skills: {
         type: Sequelize.JSON,
-        defaultValue: {}
+        defaultValue: []
       },
-      email: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,
+      photos: {
+        type: Sequelize.JSON,
+        defaultValue: []
       },
-      password: {
+      video: {
         type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: ""
-      },
-      salt: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: ""
-      },
-      avatar: {
-        type: Sequelize.STRING,
-        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -59,6 +46,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('projects');
   }
 };
