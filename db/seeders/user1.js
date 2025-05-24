@@ -39,6 +39,7 @@ module.exports = {
         name: user.name,
         email: user.email,
         salt,
+        role: '[]',
         password: hashPassword(user.password, salt),
         avatar: user.avatar,
         createdAt: now,

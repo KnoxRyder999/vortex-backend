@@ -11,7 +11,25 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-exports.createUser = async (req, res) => {
+exports.signin = (req, res) => {
+    try {
+        const { email, password } = req.body
+        User.findOne({ where: { email } })
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password.' });
+        }
+
+        const hashedInput = hashPassword(password, user.salt);
+
+        if (hashedInput !== user.password) {
+            return res.status(401).json({ message: 'Invalid email or password.' });
+        }
+    } catch (e) {
+
+    }
+}
+
+exports.createUser = (req, res) => {
     try {
         const form = new Formidable.IncomingForm({ uploadDir: __dirname + "/../../frontend/public/uploads", keepExtensions: true, multiples: false })
         form.parse(req, (err, fields, files) => {
@@ -19,7 +37,7 @@ exports.createUser = async (req, res) => {
                 console.log(err);
                 return res.status(500).send("Form parsing failed!")
             }
-            const getVal = val => Array.isArray(val)? val[0]: val
+            const getVal = val => Array.isArray(val) ? val[0] : val
             const avatar = getVal(files.avatar).newFilename
             const name = getVal(fields.name)
             const email = getVal(fields.email)

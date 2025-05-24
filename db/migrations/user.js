@@ -13,6 +13,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      isAdmin: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      role: {
+        type: Sequelize.JSON,
+        allowNull: false,
+        defaultValue: [],
+      },
       email: {
         type: Sequelize.STRING,
         unique: true,
@@ -21,10 +31,12 @@ module.exports = {
       password: {
         type: Sequelize.STRING,
         allowNull: false,
+        defaultValue: ""
       },
       salt: {
         type: Sequelize.STRING,
         allowNull: false,
+        defaultValue: ""
       },
       avatar: {
         type: Sequelize.STRING,

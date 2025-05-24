@@ -6,36 +6,44 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
-
     password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
     salt: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: ""
     },
-
     avatar: {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    isAdmin: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    role: {
+      type: DataTypes.JSON,
+      allowNull: false,
+      defaultValue: [],
+    }
   }, {
     tableName: 'users',
     hooks: {
-      beforeCreate: (user) => {
+      beforeCreate: user => {
+        console.log('🔥 beforeCreate hook triggered');
         const salt = crypto.randomBytes(16).toString('hex');
         user.salt = salt;
         user.password = hashPassword(user.password, salt);
       },
-      beforeUpdate: (user) => {
+      beforeUpdate: user => {
         if (user.changed('password')) {
           const salt = crypto.randomBytes(16).toString('hex');
           user.salt = salt;
@@ -45,14 +53,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  // Utility function to hash password with salt
   function hashPassword(password, salt) {
     return crypto
       .pbkdf2Sync(password, salt, 10000, 64, 'sha512')
       .toString('hex');
   }
 
-  // Instance method for verifying password
   User.prototype.validatePassword = function (inputPassword) {
     const hashed = hashPassword(inputPassword, this.salt);
     return this.password === hashed;
