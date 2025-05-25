@@ -11,7 +11,7 @@ module.exports = {
         clientPublic: 1,
         category: "scripts",
         skills: JSON.stringify(["QBCore", "ESX Compatible", "Lua", "HTML/CSS/JS"]),
-        photos: JSON.stringify(["/../vortex-logo.png", "/../vortex-3.png"]),
+        photos: JSON.stringify(["/vortex-logo.png", "/vortex-3.png"]),
         video: "",
         createdAt: new Date(),
         updatedAt: new Date()
@@ -24,7 +24,7 @@ module.exports = {
         clientPublic: 1,
         category: "mlo",
         skills: JSON.stringify(["3D Modeling", "MLO", "Interior Design"]),
-        photos: JSON.stringify(["/../vortex-3.png", "/../vortex-2.png"]),
+        photos: JSON.stringify(["/vortex-3.png", "/vortex-2.png"]),
         video: "",
         createdAt: new Date(),
         updatedAt: new Date()
@@ -37,7 +37,7 @@ module.exports = {
         clientPublic: 1,
         category: "ui",
         skills: JSON.stringify(["HTML/CSS", "React", "Lua Integration", "Real-time Updates"]),
-        photos: JSON.stringify(["/../monzo1.png", "/../robot.png"]),
+        photos: JSON.stringify(["/monzo1.png", "/robot.png"]),
         video: "",
         createdAt: new Date(),
         updatedAt: new Date()
@@ -50,7 +50,7 @@ module.exports = {
         clientPublic: 1,
         category: "server",
         skills: JSON.stringify(["QBCore", "Server Configuration", "Database Management", "Custom Scripts"]),
-        photos: JSON.stringify(["/../vortex-2.png", "/../vortex-logo.png"]),
+        photos: JSON.stringify(["/vortex-2.png", "/vortex-logo.png"]),
         video: "",
         createdAt: new Date(),
         updatedAt: new Date()

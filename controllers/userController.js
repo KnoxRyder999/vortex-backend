@@ -45,7 +45,7 @@ exports.register = (req, res) => {
                 return res.status(500).send("Form parsing failed!")
             }
             const getVal = val => Array.isArray(val) ? val[0] : val
-            const avatar = getVal(files.avatar).newFilename
+            const avatar = '/uploads/' + getVal(files.avatar).newFilename
             const name = getVal(fields.name)
             const email = getVal(fields.email)
             const password = getVal(fields.password)

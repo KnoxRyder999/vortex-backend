@@ -5,6 +5,6 @@ const projectRoutes = require('./projectRoutes');
 const router = express.Router();
 
 router.use('/users', authRoutes);
-router.use('/project', projectRoutes);
+router.use('/projects', projectRoutes);
 
 module.exports = router;

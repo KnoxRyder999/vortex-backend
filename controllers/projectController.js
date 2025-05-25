@@ -1,4 +1,5 @@
-const { Project } = require('../models');
+const Formidable = require('formidable');
+const { Project } = require('../db');
 
 // GET /projects – List all projects
 exports.getAllProjects = async (req, res) => {
@@ -24,10 +25,32 @@ exports.getProjectById = async (req, res) => {
 // POST /projects – Create a new project
 exports.createProject = async (req, res) => {
   try {
-    const newProject = await Project.create(req.body);
-    res.status(201).json(newProject);
-  } catch (error) {
-    res.status(400).json({ message: 'Failed to create project', error });
+    const form = new Formidable.IncomingForm({ uploadDir: __dirname + "/../../frontend/public/uploads", keepExtensions: true, multiples: true, createDirsFromUploads: true })
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("Form parsing failed!")
+      }
+      const getVal = val => Array.isArray(val) ? val[0] : val
+      const photos = files.photos.map(item => '/uploads/' + item.newFilename)
+      const video = '/uploads/' + getVal(files.video).newFilename
+      const category = getVal(fields.category);
+      const client = getVal(fields.client);
+      const clientPublic = getVal(fields.clientPublic);
+      const description = getVal(fields.description);
+      const name = getVal(fields.name);
+      const skills = getVal(fields.skills).split(',');
+      Project.create({name, description, client, clientPublic, skills, photos, video, category})
+      .then(pro => {
+        res.send(pro)
+      })
+      .catch(err => {
+        console.log(err);
+        return res.status(500).send("failed!")
+      })
+    })
+  } catch (err) {
+    res.status(500).json({ error: 'Project creation failed' });
   }
 };
 

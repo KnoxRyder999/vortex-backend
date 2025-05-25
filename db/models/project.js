@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
     // Define associations here if needed later
     static associate(models) {
-      // e.g., Project.belongsTo(models.User);
+      // e.g., Project.belongsTo(models.proj);
     }
   }
 
@@ -38,7 +38,24 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Project',
       tableName: 'projects',
-      timestamps: true
+      timestamps: true,
+      hooks: {
+        afterFind: (result, options) => {
+          if (!result) return;
+          if (result.dataValues) {
+            result.dataValues.skills = JSON.parse(result.dataValues.skills)
+            result.dataValues.photos = JSON.parse(result.dataValues.photos)
+          }
+          if (Array.isArray(result)) {
+            result.forEach(proj => {
+              if (proj.dataValues) {
+                proj.dataValues.skills = JSON.parse(proj.dataValues.skills)
+                proj.dataValues.photos = JSON.parse(proj.dataValues.photos)
+              }
+            });
+          }
+        },
+        }
     }
   );
   
