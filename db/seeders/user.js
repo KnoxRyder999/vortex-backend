@@ -20,14 +20,14 @@ module.exports = {
       },
       {
         name: 'Fawaz Hassan',
-        email: 'bob@example.com',
+        email: 'Fawaz@example.com',
         password: 'aaa',
         isAdmin: 1,
         avatar: 'bob.png',
       },
       {
         name: 'Adam dean',
-        email: 'charlie@example.com',
+        email: 'Adam@example.com',
         password: 'aaa',
         isAdmin: 1,
         avatar: 'charlie.webp',

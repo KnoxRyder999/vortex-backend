@@ -12,7 +12,7 @@ module.exports = {
         category: "scripts",
         skills: JSON.stringify(["QBCore", "ESX Compatible", "Lua", "HTML/CSS/JS"]),
         photos: JSON.stringify(["/vortex-logo.png", "/vortex-3.png"]),
-        video: "",
+        video: "night-city-in-gta-5.1920x1080.mp4",
         createdAt: new Date(),
         updatedAt: new Date()
       },
