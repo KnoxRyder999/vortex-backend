@@ -7,6 +7,7 @@ exports.getAllProjects = async (req, res) => {
     const projects = await Project.findAll();
     res.json(projects);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Failed to fetch projects', error });
   }
 };

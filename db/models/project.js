@@ -43,14 +43,14 @@ module.exports = (sequelize, DataTypes) => {
         afterFind: (result, options) => {
           if (!result) return;
           if (result.dataValues) {
-            result.dataValues.skills = JSON.parse(result.dataValues.skills)
-            result.dataValues.photos = JSON.parse(result.dataValues.photos)
+            if(!Array.isArray(result.dataValues.skills))result.dataValues.skills = JSON.parse(result.dataValues.skills)
+            if(!Array.isArray(result.dataValues.photos))result.dataValues.photos = JSON.parse(result.dataValues.photos)
           }
           if (Array.isArray(result)) {
             result.forEach(proj => {
               if (proj.dataValues) {
-                proj.dataValues.skills = JSON.parse(proj.dataValues.skills)
-                proj.dataValues.photos = JSON.parse(proj.dataValues.photos)
+                if(!Array.isArray(proj.dataValues.skills))proj.dataValues.skills = JSON.parse(proj.dataValues.skills)
+                if(!Array.isArray(proj.dataValues.photos))proj.dataValues.photos = JSON.parse(proj.dataValues.photos)
               }
             });
           }
