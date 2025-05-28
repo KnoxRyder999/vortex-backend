@@ -19,18 +19,32 @@ module.exports = {
         avatar: 'alice.jpg',
       },
       {
-        name: 'Fawaz Hassan',
-        email: 'Fawaz@example.com',
+        name: '𝔇𝔞𝔯𝔨 𝔪𝔞𝔤𝔦𝔠',
+        email: 'Axelnight@example.com',
         password: 'aaa',
         isAdmin: 1,
-        avatar: 'bob.png',
+        role: "Lead Developer",
+        avatar: 'magic.jpeg',
+      },
+      {
+        name: 'Fawaz Hassan',
+        email: 'contact@vortexbytes.com',
+        password: 'aaa',
+        role: "3D Modeler",
+        contact: {
+          discord: "VortextBytes#1234",
+          email: "contact@vortexbytes.com"
+        },
+        isAdmin: 2,
+        avatar: 'Fawaz.jpg',
       },
       {
         name: 'Adam dean',
         email: 'Adam@example.com',
         password: 'aaa',
         isAdmin: 1,
-        avatar: 'charlie.webp',
+        role: "Server Specialist",
+        avatar: 'adam.jpg',
       },
     ];
 

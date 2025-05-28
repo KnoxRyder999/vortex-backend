@@ -21,9 +21,6 @@ module.exports = {
       role: {
         type: Sequelize.STRING,
       },
-      skill: {
-        type: Sequelize.STRING,
-      },
       contact: {
         type: Sequelize.JSON,
         defaultValue: {}

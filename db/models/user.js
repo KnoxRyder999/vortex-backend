@@ -30,9 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0,
     },
     role: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+    },
+    contact: {
       type: DataTypes.JSON,
       allowNull: false,
-      defaultValue: [],
+      defaultValue: {},
     }
   }, {
     tableName: 'users',
@@ -48,12 +52,12 @@ module.exports = (sequelize, DataTypes) => {
         if (result.dataValues) {
           delete result.dataValues.password;
           delete result.dataValues.salt;
-          result.dataValues.role = JSON.parse(result.dataValues.role)
+          result.dataValues.contact = JSON.parse(result.dataValues.contact)
         }
         if (Array.isArray(result)) {
           result.forEach(user => {
             if (user.dataValues) {
-              user.dataValues.role = JSON.parse(user.dataValues.role)
+              user.dataValues.contact = JSON.parse(user.dataValues.contact)
               delete user.dataValues.password;
               delete user.dataValues.salt;
             }
