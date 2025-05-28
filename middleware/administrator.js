@@ -12,6 +12,7 @@ const authenticateToken = (req, res, next) => {
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            if(!decoded.isAdmin) return res.status(403).send("only admin access!")
             req.user = decoded; // Attach user payload to request
             next(); // Continue to route handler
         } catch (err) {
