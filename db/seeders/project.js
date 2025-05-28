@@ -25,7 +25,7 @@ module.exports = {
         category: "mlo",
         skills: JSON.stringify(["3D Modeling", "MLO", "Interior Design"]),
         photos: JSON.stringify(["/vortex-3.png", "/vortex-2.png"]),
-        video: "",
+        video: "https://res.cloudinary.com/djta4ar8o/video/upload/v1748449277/yuj3uo138qs50aoophgf.mp4",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -38,7 +38,7 @@ module.exports = {
         category: "ui",
         skills: JSON.stringify(["HTML/CSS", "React", "Lua Integration", "Real-time Updates"]),
         photos: JSON.stringify(["/monzo1.png", "/robot.png"]),
-        video: "",
+        video: "https://res.cloudinary.com/djta4ar8o/video/upload/v1748449277/yuj3uo138qs50aoophgf.mp4",
         createdAt: new Date(),
         updatedAt: new Date()
       },
