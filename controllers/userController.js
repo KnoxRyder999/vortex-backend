@@ -54,7 +54,6 @@ exports.register = (req, res) => {
         const { name, email, password, avatar } = req.body
         User.findOne({ where: {email} })
             .then(found => {
-                console.log(found);
                 if (found) return res.status(400).send({ message: "Already registered email." })
                 User.create({ name, email, password, avatar })
                     .then(user => {
