@@ -19,7 +19,7 @@ module.exports = {
         avatar: 'alice.jpg',
       },
       {
-        name: '𝔇𝔞𝔯𝔨 𝔪𝔞𝔤𝔦𝔠',
+        name: 'Darf Magic',
         email: 'Axelnight@example.com',
         password: 'aaa',
         isAdmin: 1,
@@ -57,7 +57,7 @@ module.exports = {
         email: user.email,
         isAdmin: user.isAdmin,
         salt,
-        role: '[]',
+        role: user.role,
         password: hashPassword(user.password, salt),
         avatar: user.avatar,
         createdAt: now,
