@@ -1,4 +1,3 @@
-const Formidable = require("formidable");
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 const User = db.User;
@@ -38,31 +37,28 @@ exports.login = (req, res) => {
 
 exports.register = (req, res) => {
     try {
-        const form = new Formidable.IncomingForm({ uploadDir: __dirname + "/../../frontend/public/uploads", keepExtensions: true, multiples: false })
-        form.parse(req, (err, fields, files) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).send("Form parsing failed!")
-            }
-            const getVal = val => Array.isArray(val) ? val[0] : val
-            const avatar = '/uploads/' + getVal(files.avatar).newFilename
-            const name = getVal(fields.name)
-            const email = getVal(fields.email)
-            const password = getVal(fields.password)
-            User.create({ name, email, password, avatar })
-                .then(user => {
-                    const token = jwt.sign(
-                        { ...user, password: "", salt: "" }, // payload
-                        process.env.JWT_SECRET,
-                        { expiresIn: '2h' } // expires in 2 hours
-                    );
-                    res.send({ token, user })
+        const { name, email, password, avatar } = req.body
+        User.findOne({ email })
+            .then(found => {
+                if (found) return res.status(400).send({ message: "Already registered email." })
+                User.create({ name, email, password, avatar })
+                    .then(user => {
+                        const token = jwt.sign(
+                            { ...user, password: "", salt: "" }, // payload
+                            process.env.JWT_SECRET,
+                            { expiresIn: '2h' } // expires in 2 hours
+                        );
+                        res.send({ token, user })
                     })
-                .catch(err => {
-                    console.log(err);
-                    res.status(500).send(err.message)
-                })
-        })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).send(err.message)
+                    })
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).send("failed to register user")
+            })
     } catch (err) {
         res.status(400).json({ error: 'User creation failed' });
     }
