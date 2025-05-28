@@ -12,8 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     tableName: 'services',
-    hooks: {
-    },
+    timestamps: true // ✅ This is the default
   });
   return Service;
 };

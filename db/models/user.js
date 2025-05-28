@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: {},
     }
   }, {
+    timestamps: true, // ✅ This is the default
     tableName: 'users',
     hooks: {
       beforeCreate: user => {

@@ -1,10 +1,20 @@
+const { Op } = require('sequelize');
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 const User = db.User;
 
 exports.getAllUsers = async (req, res) => {
     try {
-        User.findAll({ where: { isAdmin: 1 } })
+        User.findAll({
+            where: {
+                isAdmin: {
+                    [Op.and]: [
+                        { [Op.gt]: 0 },
+                        { [Op.lt]: 3 }
+                    ]
+                }
+            }
+        })
             .then(list => res.send(list))
             .catch(err => {
                 console.log(err);
