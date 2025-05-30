@@ -35,7 +35,7 @@ exports.login = (req, res) => {
                 const token = jwt.sign(
                     { ...user }, // payload
                     process.env.JWT_SECRET,
-                    { expiresIn: '2h' } // expires in 2 hours
+                    { expiresIn: '1h' } // expires in 2 hours
                 );
                 res.send({ token, user })
             })

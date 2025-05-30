@@ -3,7 +3,8 @@ const { Service } = require('../db');
 // GET /services – List all services
 exports.getAllServices = async (req, res) => {
   try {
-    const services = await Service.findAll();
+    const serviceList = await Service.findAll();
+    const services = serviceList.map(item => { return { ...item.dataValues, product: "" } })
     res.json(services);
   } catch (error) {
     console.log(error);
@@ -14,9 +15,10 @@ exports.getAllServices = async (req, res) => {
 // GET /services/:id – Get a single service by ID
 exports.getServiceById = async (req, res) => {
   try {
-    const service = await Service.findByPk(req.params.id);
-    if (!service) return res.status(404).json({ message: 'Service not found' });
-    res.json(service);
+    const serviceList = await Service.findByPk(req.params.id);
+    if (!serviceList) return res.status(404).json({ message: 'Service not found' });
+    const services = serviceList.map(item => { return { ...item.dataValues, product: "" } })
+    res.json(services);
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch service', error });
   }

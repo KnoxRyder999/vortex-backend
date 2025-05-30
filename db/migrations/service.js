@@ -16,7 +16,15 @@ module.exports = {
       description: {
         type: Sequelize.STRING,
       },
+      price: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
       photo: {
+        type: Sequelize.STRING,
+      },
+      product: {
         type: Sequelize.STRING,
       },
       // ✅ Add timestamps explicitly
