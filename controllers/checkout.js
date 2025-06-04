@@ -27,8 +27,8 @@ exports.order = async (req, res) => {
                     quantity: 1,
                 }
             ],
-            success_url: process.env.YOUR_DOMAIN + '/download.html?product='+product,
-            cancel_url: process.env.YOUR_DOMAIN + '/failed.html',//'/failed.html?',
+            success_url: process.env.YOUR_DOMAIN + '/download?product='+product,
+            cancel_url: process.env.YOUR_DOMAIN + '/failed',//'/failed.html?',
         });
         res.json({ url: session.url });
     } catch (error) {
